@@ -24,6 +24,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int[] images;
     private String[] strDescs;
     private String[] strItems;
+    //LineLayout
+    private GridLayoutManager mGirdLayoutManger;
+    private LinearLayoutManager mLinearLayoutManager;
+
+    private int lastPosition = 0;
+    private int lastOffset = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rv = (RecyclerView) findViewById(R.id.recyclerView);
         btnChange = (ImageButton) findViewById(R.id.btn_change);
         rv.setItemAnimator(new DefaultItemAnimator());
+        mGirdLayoutManger = new GridLayoutManager(this, 2);
+        mLinearLayoutManager = new LinearLayoutManager(this);
     }
 
     private void initData() {
@@ -70,6 +78,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void setListener() {
 
         btnChange.setOnClickListener(this);
+        rv.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (isLinearLayout) {
+                    View topView = mLinearLayoutManager.getChildAt(0);
+                    if (topView != null) {
+                        lastOffset = topView.getTop();                                   //获取与该view的顶部的偏移量
+                        lastPosition = mLinearLayoutManager.getPosition(topView);
+                    }
+                } else {
+                    View topView = mGirdLayoutManger.getChildAt(0);
+                    if (topView != null) {
+                        lastOffset = topView.getTop();                                   //获取与该view的顶部的偏移量
+                        lastPosition = mGirdLayoutManger.getPosition(topView);
+                    }
+                }
+            }
+        });
     }
 
 
@@ -82,16 +114,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if(isLinearLayout) {
                     //切换成网格布局
                     recyclerViewAdapter.setType(1);
-                    rv.setLayoutManager(new GridLayoutManager(this, 2));
+//                    rv.setLayoutManager(new GridLayoutManager(this, 2));
+                    rv.setLayoutManager(mGirdLayoutManger);
                     recyclerViewAdapter.notifyDataSetChanged();
+                    mGirdLayoutManger.scrollToPosition(lastPosition);
 //                    startAnimation(R.anim.zoom_in);
                     isLinearLayout = false;
 
                 } else {
                     //切换成垂直线性布局
                     recyclerViewAdapter.setType(0);
-                    rv.setLayoutManager(new LinearLayoutManager(this));
+//                    rv.setLayoutManager(new LinearLayoutManager(this));
+                    rv.setLayoutManager(mLinearLayoutManager);
                     recyclerViewAdapter.notifyDataSetChanged();
+                    mLinearLayoutManager.scrollToPosition(lastPosition);
 //                    startAnimation(R.anim.zoom_in);
                     isLinearLayout = true;
                 }
