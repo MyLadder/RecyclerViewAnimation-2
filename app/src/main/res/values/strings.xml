@@ -33,4 +33,15 @@
         <item>苹果超薄游戏本,体验不一样的感觉13</item>
         <item>苹果超薄游戏本,体验不一样的感觉14</item>
     </string-array>
+    <string-array name="str_tips">
+        <item>大毛领</item>
+        <item>大码</item>
+        <item>鸭绒</item>
+        <item>羽绒</item>
+        <item>长款</item>
+        <item>轻薄</item>
+        <item>女士</item>
+        <item>纯色</item>
+    </string-array>
+
 </resources>
