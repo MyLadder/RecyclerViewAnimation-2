@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">RecyclerViewAnimation</string>
+    <string name="action_settings">Settings</string>
+    <string-array name="str_item">
+        <item>苹果超薄游戏本1</item>
+        <item>苹果超薄游戏本2</item>
+        <item>苹果超薄游戏本3</item>
+        <item>苹果超薄游戏本4</item>
+        <item>苹果超薄游戏本5</item>
+        <item>苹果超薄游戏本6</item>
+        <item>苹果超薄游戏本7</item>
+        <item>苹果超薄游戏本8</item>
+        <item>苹果超薄游戏本9</item>
+        <item>苹果超薄游戏本10</item>
+        <item>苹果超薄游戏本11</item>
+        <item>苹果超薄游戏本12</item>
+        <item>苹果超薄游戏本13</item>
+        <item>苹果超薄游戏本14</item>
+    </string-array>
+    <string-array name="str_desc">
+        <item>苹果超薄游戏本,体验不一样的感觉1</item>
+        <item>苹果超薄游戏本,体验不一样的感觉2</item>
+        <item>苹果超薄游戏本,体验不一样的感觉3</item>
+        <item>苹果超薄游戏本,体验不一样的感觉4</item>
+        <item>苹果超薄游戏本,体验不一样的感觉5</item>
+        <item>苹果超薄游戏本,体验不一样的感觉6</item>
+        <item>苹果超薄游戏本,体验不一样的感觉7</item>
+        <item>苹果超薄游戏本,体验不一样的感觉8</item>
+        <item>苹果超薄游戏本,体验不一样的感觉9</item>
+        <item>苹果超薄游戏本,体验不一样的感觉10</item>
+        <item>苹果超薄游戏本,体验不一样的感觉11</item>
+        <item>苹果超薄游戏本,体验不一样的感觉12</item>
+        <item>苹果超薄游戏本,体验不一样的感觉13</item>
+        <item>苹果超薄游戏本,体验不一样的感觉14</item>
+    </string-array>
+</resources>
