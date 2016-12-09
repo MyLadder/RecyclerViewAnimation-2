@@ -92,9 +92,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             lastPosition = mLinearLayoutManager.findFirstVisibleItemPosition();
             lastOffset = mLinearLayoutManager.findViewByPosition(lastPosition).getTop();
         } else {
-            //获取与该view的顶部的偏移量
+//            获取与该view的顶部的偏移量
             lastPosition = (mStaggeredGridLayoutManager.findFirstVisibleItemPositions(null))[0];
             lastOffset = mStaggeredGridLayoutManager.findViewByPosition(lastPosition).getTop();
+
+
+//            lastPosition = mGirdLayoutManger.findFirstVisibleItemPosition();
+//            lastOffset = mGirdLayoutManger.findViewByPosition(lastPosition).getTop();
         }
 
     }
@@ -108,12 +112,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 calculateRecyclePos();
                 //切换x
                 if (isLinearLayout) {
-                    //切换成网格布局
+//                    //切换成网格布局
 //                    recyclerViewAdapter.setType(1);
 ////                    rv.setLayoutManager(new GridLayoutManager(this, 2));
 //                    rv.setLayoutManager(mGirdLayoutManger);
 //                    recyclerViewAdapter.notifyDataSetChanged();
-//                    mGirdLayoutManger.scrollToPosition(lastPosition);
+////                    mGirdLayoutManger.scrollToPosition(lastPosition);
+//                    mGirdLayoutManger.scrollToPositionWithOffset(lastPosition,lastOffset);
 ////                    startAnimation(R.anim.zoom_in);
 //                    isLinearLayout = false;
 
@@ -124,9 +129,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         lastPosition--;
                     }
 //                    mStaggeredGridLayoutManager.scrollToPosition(lastPosition);
-                    mStaggeredGridLayoutManager.scrollToPositionWithOffset(5,-150);
-
+                    mStaggeredGridLayoutManager.scrollToPositionWithOffset(lastPosition,lastOffset);
                     recyclerViewAdapter.notifyDataSetChanged();
+                    rv.scrollBy(0,-lastOffset);
 //                    startAnimation(R.anim.zoom_in);
                     isLinearLayout = false;
                 } else {
