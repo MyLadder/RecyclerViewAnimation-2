@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:visibility="visible">
 
@@ -13,7 +13,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_weight="1"
             android:layout_marginLeft="20dp"
@@ -34,7 +34,7 @@
             android:textColor="@color/wdb_gray25"/>
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_weight="1"
             android:layout_marginLeft="9.5dp"
@@ -51,7 +51,7 @@
 
         <TextView
             android:id="@+id/tip1"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="32dp"
             android:layout_weight="1"
             android:gravity="center"
@@ -63,7 +63,7 @@
 
         <TextView
             android:id="@+id/tip2"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="32dp"
             android:layout_weight="1"
             android:gravity="center"
@@ -82,7 +82,7 @@
 
         <TextView
             android:id="@+id/tip3"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="32dp"
             android:layout_weight="1"
             android:gravity="center"
@@ -94,7 +94,7 @@
 
         <TextView
             android:id="@+id/tip4"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="32dp"
             android:layout_weight="1"
             android:gravity="center"
@@ -113,7 +113,7 @@
 
         <TextView
             android:id="@+id/tip5"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="32dp"
             android:layout_weight="1"
             android:gravity="center"
@@ -125,7 +125,7 @@
 
         <TextView
             android:id="@+id/tip6"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="32dp"
             android:layout_weight="1"
             android:gravity="center"
@@ -144,7 +144,7 @@
 
         <TextView
             android:id="@+id/tip7"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="32dp"
             android:layout_weight="1"
             android:gravity="center"
@@ -156,7 +156,7 @@
 
         <TextView
             android:id="@+id/tip8"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="32dp"
             android:layout_weight="1"
             android:gravity="center"

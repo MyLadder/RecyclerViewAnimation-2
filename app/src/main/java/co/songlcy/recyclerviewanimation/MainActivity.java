@@ -6,6 +6,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
@@ -13,7 +14,9 @@ import android.widget.ImageButton;
 
 import co.songlcy.recyclerviewanimation.adapter.RecyclerViewAdapter;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+import static android.support.v7.widget.StaggeredGridLayoutManager.VERTICAL;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private RecyclerView rv;
     private ImageButton btnChange;
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //LineLayout
     private GridLayoutManager mGirdLayoutManger;
     private LinearLayoutManager mLinearLayoutManager;
+    private StaggeredGridLayoutManager mStaggeredGridLayoutManager;
 
     private int lastPosition = 0;
     private int lastOffset = 0;
@@ -46,10 +50,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rv.setItemAnimator(new DefaultItemAnimator());
         mGirdLayoutManger = new GridLayoutManager(this, 2);
         mLinearLayoutManager = new LinearLayoutManager(this);
+        mStaggeredGridLayoutManager = new StaggeredGridLayoutManager(2, VERTICAL);
     }
 
     private void initData() {
-        strItems  = getResources().getStringArray(R.array.str_item);
+        strItems = getResources().getStringArray(R.array.str_item);
         strDescs = getResources().getStringArray(R.array.str_desc);
         images = new int[]{
                 R.drawable.ic_photo,
@@ -68,40 +73,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 R.drawable.ic_photo
         };
 
-        recyclerViewAdapter = new RecyclerViewAdapter(this,strItems,strDescs);
-        rv.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewAdapter = new RecyclerViewAdapter(this, strItems, strDescs);
+        rv.setLayoutManager(mLinearLayoutManager);
         rv.setAdapter(recyclerViewAdapter);
-        startAnimation(R.anim.scale);
+
+
+//        startAnimation(R.anim.scale);
 
     }
 
     private void setListener() {
-
         btnChange.setOnClickListener(this);
-        rv.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
+    }
 
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if (isLinearLayout) {
-                    View topView = mLinearLayoutManager.getChildAt(0);
-                    if (topView != null) {
-                        lastOffset = topView.getTop();                                   //获取与该view的顶部的偏移量
-                        lastPosition = mLinearLayoutManager.getPosition(topView);
-                    }
-                } else {
-                    View topView = mGirdLayoutManger.getChildAt(0);
-                    if (topView != null) {
-                        lastOffset = topView.getTop();                                   //获取与该view的顶部的偏移量
-                        lastPosition = mGirdLayoutManger.getPosition(topView);
-                    }
-                }
-            }
-        });
+
+    private void calculateRecyclePos() {
+        if (isLinearLayout) {
+            lastPosition = mLinearLayoutManager.findFirstVisibleItemPosition();
+            lastOffset = mLinearLayoutManager.findViewByPosition(lastPosition).getTop();
+        } else {
+            //获取与该view的顶部的偏移量
+            lastPosition = (mStaggeredGridLayoutManager.findFirstVisibleItemPositions(null))[0];
+            lastOffset = mStaggeredGridLayoutManager.findViewByPosition(lastPosition).getTop();
+        }
+
     }
 
 
@@ -110,26 +105,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (v.getId()) {
             case R.id.btn_change:
-                //切换
-                if(isLinearLayout) {
+                calculateRecyclePos();
+                //切换x
+                if (isLinearLayout) {
                     //切换成网格布局
-                    recyclerViewAdapter.setType(1);
-//                    rv.setLayoutManager(new GridLayoutManager(this, 2));
-                    rv.setLayoutManager(mGirdLayoutManger);
+//                    recyclerViewAdapter.setType(1);
+////                    rv.setLayoutManager(new GridLayoutManager(this, 2));
+//                    rv.setLayoutManager(mGirdLayoutManger);
+//                    recyclerViewAdapter.notifyDataSetChanged();
+//                    mGirdLayoutManger.scrollToPosition(lastPosition);
+////                    startAnimation(R.anim.zoom_in);
+//                    isLinearLayout = false;
+
+
+                    recyclerViewAdapter.setType(5);     //瀑布流
+                    rv.setLayoutManager(mStaggeredGridLayoutManager);
+                    if (lastPosition % 2 == 1) {
+                        lastPosition--;
+                    }
+//                    mStaggeredGridLayoutManager.scrollToPosition(lastPosition);
+                    mStaggeredGridLayoutManager.scrollToPositionWithOffset(5,-150);
+
                     recyclerViewAdapter.notifyDataSetChanged();
-                    mGirdLayoutManger.scrollToPosition(lastPosition);
 //                    startAnimation(R.anim.zoom_in);
                     isLinearLayout = false;
-
                 } else {
                     //切换成垂直线性布局
                     recyclerViewAdapter.setType(0);
 //                    rv.setLayoutManager(new LinearLayoutManager(this));
                     rv.setLayoutManager(mLinearLayoutManager);
+                    mLinearLayoutManager.scrollToPositionWithOffset(lastPosition,lastOffset);
                     recyclerViewAdapter.notifyDataSetChanged();
-                    mLinearLayoutManager.scrollToPosition(lastPosition);
+//                    mLinearLayoutManager.scrollToPosition(lastPosition);
 //                    startAnimation(R.anim.zoom_in);
                     isLinearLayout = true;
+
                 }
                 break;
             default:
@@ -142,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void startAnimation(int anim) {
 
-        LayoutAnimationController lac = new LayoutAnimationController(AnimationUtils.loadAnimation(this,anim));
+        LayoutAnimationController lac = new LayoutAnimationController(AnimationUtils.loadAnimation(this, anim));
         lac.setOrder(LayoutAnimationController.ORDER_RANDOM);
         rv.setLayoutAnimation(lac);
         rv.startLayoutAnimation();

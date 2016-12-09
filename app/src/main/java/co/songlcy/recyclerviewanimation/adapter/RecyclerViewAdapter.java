@@ -40,15 +40,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         View rootView;
         if (viewType == 0) {
-            rootView = inflater.inflate(R.layout.layout_linear, null, false);
+            rootView = inflater.inflate(R.layout.layout_linear, parent, false);
             LinearViewHolder linearViewHolder = new LinearViewHolder(rootView);
             return linearViewHolder;
         } else if (viewType == 1) {
-            rootView = inflater.inflate(R.layout.layout_grid, null, false);
+            rootView = inflater.inflate(R.layout.layout_grid, parent, false);
             GridViewHolder gridViewHolder = new GridViewHolder(rootView);
             return gridViewHolder;
-        } else {
-            rootView = inflater.inflate(R.layout.layout_grid_tips, null, false);
+        } else if(viewType == 5){
+            rootView = inflater.inflate(R.layout.layout_stag, parent, false);
+            StagViewHolder StagViewHolder = new StagViewHolder(rootView);
+            return StagViewHolder;
+        }else{
+            rootView = inflater.inflate(R.layout.layout_grid_tips, parent, false);
             LineLayoutTipsHolder lineLayoutTipsHolder = new LineLayoutTipsHolder(rootView);
             return lineLayoutTipsHolder;
         }
@@ -64,7 +68,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         } else if (type == 1&&position!=8) {
             GridViewHolder gridViewHolder = (GridViewHolder) holder;
             gridViewHolder.tvName.setText(strItems[position]);
-        } else if (type == 8) {
+        } else if(type == 5&&position!=8){
+            StagViewHolder stagViewHolder = (StagViewHolder) holder;
+            stagViewHolder.tvName.setText(strItems[position]);
+        }else if (position == 8) {
             LineLayoutTipsHolder tipsHolder = (LineLayoutTipsHolder) holder;
             for (int i = 0; i < 8; i++) {
                 tipsHolder.tvNames.get(i).setText(tipDatas[i]);
@@ -114,6 +121,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         private TextView tvName;
 
         public GridViewHolder(View itemView) {
+            super(itemView);
+            tvName = (TextView) itemView.findViewById(R.id.tv_name);
+        }
+    }
+
+    public static class StagViewHolder extends BaseViewHolder {
+
+        private TextView tvName;
+
+        public StagViewHolder(View itemView) {
             super(itemView);
             tvName = (TextView) itemView.findViewById(R.id.tv_name);
         }
